@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs dos Sites Monitorados</title>
+    <style>
+        /* Estilo para os logs */
+        .log-entry {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logs dos Sites Monitorados</h1>
+    <div id="logs-container">
+        <!-- Os logs serão exibidos aqui -->
+    </div>
+    <script>
+        // Função para formatar a data e hora
+        function formatarDataHora(data) {
+            const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            return new Date(data).toLocaleString(undefined, options);
+        }
+
+        // Função para carregar e exibir os logs dos sites monitorados
+        function carregarLogs() {
+            fetch('/logs')
+                .then(response => response.json())
+                .then(data => {
+                    const logsContainer = document.getElementById('logs-container');
+                    logsContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+                    if (data.length === 0) {
+                        logsContainer.textContent = 'Nenhum log disponível.';
+                    } else {
+                        data.forEach(log => {
+                            const logItem = document.createElement('div');
+                            logItem.className = 'log-entry';
+                            logItem.textContent = formatarDataHora(log.timestamp) + ' - ' + log.message;
+                            logsContainer.appendChild(logItem);
+                        });
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar logs:', error));
+        }
+
+        // Carrega os logs quando a página carrega
+        window.onload = carregarLogs;
+    </script>
+</body>
+</html>

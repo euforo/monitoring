@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações Detalhadas dos Sites</title>
+</head>
+<body>
+    <h1>Informações Detalhadas dos Sites</h1>
+    <table>
+        <tr>
+            <th>Data e Hora</th>
+            <th>URL do Site</th>
+            <th>Status</th>
+            <th>Email Enviado</th>
+        </tr>
+        {% for evento in eventos %}
+            <tr>
+                <td>{{ evento.timestamp }}</td>
+                <td>{{ evento.url }}</td>
+                <td>{{ evento.status }}</td>
+                <td>{{ evento.email_enviado }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/">Voltar para a página inicial</a>
+</body>
+</html>
